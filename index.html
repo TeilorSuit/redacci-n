@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Académico UTEQ</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2d5a27;
+            --secondary-green: #4a7c59;
+            --accent-green: #6b8e5a;
+            --light-green: #8fbc8f;
+            --sage-green: #9caf88;
+            --forest-green: #1a3d17;
+            --mint-green: #a8d5ba;
+            --emerald: #2e8b57;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --text-dark: #1e3a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--forest-green) 0%, var(--primary-green) 35%, var(--secondary-green) 70%, var(--accent-green) 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Academic pattern overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px, 40px 40px;
+            z-index: 1;
+        }
+
+        /* Animated floating elements (representing knowledge/books) */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            animation: academicFloat 8s ease-in-out infinite;
+            font-size: 24px;
+        }
+
+        @keyframes academicFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            25% { transform: translateY(-20px) rotate(90deg); opacity: 0.2; }
+            50% { transform: translateY(-10px) rotate(180deg); opacity: 0.15; }
+            75% { transform: translateY(-30px) rotate(270deg); opacity: 0.1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+            max-width: 480px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 35px 80px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .university-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .university-logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 
+                0 15px 35px rgba(45, 90, 39, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .university-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: transform 0.6s;
+        }
+
+        .university-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .university-logo:hover::before {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        .university-logo i {
+            font-size: 48px;
+            color: white;
+            z-index: 2;
+            position: relative;
+        }
+
+        .university-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-green), var(--emerald));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .university-subtitle {
+            color: var(--secondary-green);
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .portal-title {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-section {
+            margin-top: 35px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-green);
+            z-index: 5;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(74, 124, 89, 0.2);
+            border-radius: 16px;
+            color: var(--text-dark);
+            font-size: 16px;
+            font-weight: 500;
+            padding: 18px 20px 18px 55px;
+            height: 60px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .form-control::placeholder {
+            color: rgba(74, 124, 89, 0.6);
+            font-weight: 400;
+        }
+
+        .form-control:focus {
+            background: white;
+            border-color: var(--primary-green);
+            box-shadow: 
+                0 0 0 4px rgba(45, 90, 39, 0.1),
+                inset 0 2px 4px rgba(0, 0, 0, 0.02);
+            outline: none;
+        }
+
+        .form-control:focus + .input-icon {
+            color: var(--primary-green);
+        }
+
+        .form-label {
+            color: var(--secondary-green);
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--secondary-green);
+            cursor: pointer;
+            z-index: 5;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-green);
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            padding: 18px;
+            height: 60px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 
+                0 8px 25px rgba(45, 90, 39, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-login::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 15px 40px rgba(45, 90, 39, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, var(--secondary-green) 0%, var(--primary-green) 100%);
+        }
+
+        .btn-login:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:active {
+            transform: translateY(-1px);
+        }
+
+        .additional-options {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .forgot-password {
+            color: var(--secondary-green);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--primary-green);
+            text-decoration: underline;
+        }
+
+        .academic-info {
+            background: linear-gradient(135deg, rgba(45, 90, 39, 0.05), rgba(74, 124, 89, 0.05));
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid rgba(74, 124, 89, 0.1);
+        }
+
+        .academic-info h6 {
+            color: var(--primary-green);
+            font-weight: 700;
+            margin-bottom: 12px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+
+        .info-item i {
+            color: var(--secondary-green);
+            width: 16px;
+            margin-right: 8px;
+        }
+
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .login-container {
+                margin: 20px;
+                padding: 35px 25px;
+            }
+            
+            .university-name {
+                font-size: 1.8rem;
+            }
+
+            .university-logo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .university-logo i {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-control {
+                padding: 16px 18px 16px 50px;
+                height: 55px;
+            }
+
+            .btn-login {
+                height: 55px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating academic elements -->
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+        <div class="login-container">
+            <div class="university-header">
+                <div class="university-logo">
+                    <img src="assets/logo-uteq.png" alt="Logo UTEQ" style="width: 70px; height: 70px; object-fit: contain;">
+                </div>
+                <h1 class="university-name">UTEQ</h1>
+                <p class="university-subtitle">Universidad Técnica Estatal de Quevedo</p>
+                <p class="portal-title">Portal Académico Estudiantil</p>
+            </div>
+
+            <div class="form-section">
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label for="usuario" class="form-label">Usuario</label>
+                        <i class="fas fa-user-graduate input-icon"></i>
+                        <input type="text" class="form-control" id="usuario" placeholder="Ingrese su código estudiantil" autocomplete="username" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="contrasena" class="form-label">Contraseña</label>
+                        <i class="fas fa-shield-alt input-icon"></i>
+                        <input type="password" class="form-control" id="contrasena" placeholder="Ingrese su contraseña" autocomplete="current-password" required>
+                        <button type="button" class="password-toggle" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn btn-login w-100">
+                        <span class="loading" id="loadingSpinner">
+                            <div class="loading-spinner"></div>
+                            Verificando...
+                        </span>
+                        <span class="btn-text" id="btnText">Acceder al Portal</span>
+                    </button>
+                </form>
+
+                <div class="additional-options">
+                    <a href="#" class="forgot-password">
+                        <i class="fas fa-key me-1"></i>
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+
+                <div class="academic-info">
+                    <h6><i class="fas fa-info-circle me-2"></i>Información Importante</h6>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Portal disponible 24/7 para consultas académicas</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-laptop"></i>
+                        <span>Accede a calificaciones, horarios y recursos</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Soporte técnico: ext. 1234</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Create floating academic elements
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const icons = ['fas fa-book', 'fas fa-flask', 'fas fa-microscope', 'fas fa-calculator', 'fas fa-atom', 'fas fa-dna', 'fas fa-brain', 'fas fa-chart-line'];
+            
+            for (let i = 0; i < 20; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.innerHTML = `<i class="${icons[Math.floor(Math.random() * icons.length)]}"></i>`;
+                element.style.left = Math.random() * 100 + '%';
+                element.style.top = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 8 + 's';
+                element.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                container.appendChild(element);
+            }
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('contrasena');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = 'fas fa-eye';
+            }
+        }
+
+        // Form submission with loading animation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btnText = document.getElementById('btnText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const submitBtn = this.querySelector('.btn-login');
+            
+            // Show loading state
+            btnText.style.display = 'none';
+            loadingSpinner.style.display = 'flex';
+            submitBtn.disabled = true;
+            
+            // Simulate login process (replace with actual authentication)
+            setTimeout(() => {
+                // Reset button state
+                btnText.style.display = 'block';
+                loadingSpinner.style.display = 'none';
+                submitBtn.disabled = false;
+                
+                // Success simulation
+                alert('¡Bienvenido al Portal Académico UTEQ!');
+                // Here you would typically redirect to the dashboard
+                // window.location.href = '/dashboard';
+            }, 2500);
+        });
+
+        // Enhanced keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const activeElement = document.activeElement;
+                if (activeElement.id === 'usuario') {
+                    e.preventDefault();
+                    document.getElementById('contrasena').focus();
+                }
+            }
+        });
+
+        // Input animation effects
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentNode.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (this.value === '') {
+                    this.parentNode.classList.remove('focused');
+                }
+            });
+
+            // Auto-format student ID if needed
+            if (input.id === 'usuario') {
+                input.addEventListener('input', function() {
+                    // Remove any non-alphanumeric characters for student ID
+                    this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
+                });
+            }
+        });
+
+        // Initialize floating elements when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingElements();
+        });
+
+        // Add subtle parallax effect to floating elements
+        document.addEventListener('mousemove', function(e) {
+            const elements = document.querySelectorAll('.floating-element');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            elements.forEach((element, index) => {
+                const speed = (index % 3 + 1) * 0.5;
+                const xPos = (x - 0.5) * speed;
+                const yPos = (y - 0.5) * speed;
+                element.style.transform = `translate(${xPos}px, ${yPos}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
