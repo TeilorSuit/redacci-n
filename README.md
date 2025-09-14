@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Vista Previa del Portal UTEQ](./logo-uteq.png)
+![Vista Previa del Portal UTEQ](./capturapantalla.png)
 
 **Universidad Técnica Estatal de Quevedo**  
 *Portal de Acceso Estudiantil Moderno y Seguro*
