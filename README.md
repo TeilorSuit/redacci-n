@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![UTEQ Logo](https://img.shields.io/badge/UTEQ-Portal%20Acad%C3%A9mico-2d5a27?style=for-the-badge&logo=graduation-cap&logoColor=white)
+![Vista Previa del Portal UTEQ](./logo-uteq.png)
 
 **Universidad Técnica Estatal de Quevedo**  
 *Portal de Acceso Estudiantil Moderno y Seguro*
